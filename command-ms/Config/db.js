@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/product-ms", {
+mongoose.connect("mongodb://localhost:27017/command-ms", {
   useNewUrlParser: true,
 });
 
