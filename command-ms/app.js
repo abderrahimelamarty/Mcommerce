@@ -4,6 +4,7 @@ const db = require("./Config/db");
 const routes = require("./Controllers/CommandController");
 const port = process.env.PORT | 8081;
 const app = express();
+var cors = require("cors");
 
 app.listen(port, function () {
   console.log("Server is listening at port:" + port);
@@ -16,5 +17,7 @@ app.use(express.json());
 
 // Parses the text as json
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use("/", routes);
