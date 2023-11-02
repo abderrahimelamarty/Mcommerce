@@ -3,15 +3,7 @@ require("express-async-errors");
 const amqp = require("amqplib");
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (email) => {
-  let config = {
-    service: "gmail",
-    auth: {
-      user: "abdrahim.tawnat12345@gmail.com",
-      pass: "btfgbtjkenqtxhf",
-    },
-  };
-};
+const sendEmail = async (email) => {};
 
 let channel;
 async function connect() {
