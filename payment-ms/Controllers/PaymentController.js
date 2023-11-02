@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const Paiement = require("../Models/PaymentModel");
 const axios = require("axios");
+const amqp = require("amqplib");
+
+let channel;
+
+async function connect() {
+  const amqpServer = process.env.RABBITMQ_URL;
+  const connection = await amqp.connect(amqpServer);
+  channel = await connection.createChannel();
+  await channel.assertQueue("PRODUCT");
+}
+connect();
 
 router.post("/payments", async (req, res) => {
   const paymentData = req.body;
@@ -49,7 +60,15 @@ router.post("/payments", async (req, res) => {
         .status(500)
         .json({ error: "Erreur lors de la mise à jour de la commande" });
     }
-
+    const email = "abdrahim.tawnat12345@gmail.com";
+    channel.sendToQueue(
+      "ORDER",
+      Buffer.from(
+        JSON.stringify({
+          email,
+        })
+      )
+    );
     return res.status(201).json(newPayment);
   } catch (err) {
     console.error(err);
